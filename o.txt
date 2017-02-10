@@ -1,0 +1,60 @@
+===============================
+===============================
+C:\Users\aab2210\AppData\Local\Temp\ccOk4aTL.o: In function `_import_array':
+C:/Users/aab2210/AppData/Local/Continuum/Anaconda3/lib/site-packages/numpy/core/include/numpy/__multiarray_api.h:1636: undefined reference to `__imp_PyExc_ImportError'
+C:/Users/aab2210/AppData/Local/Continuum/Anaconda3/lib/site-packages/numpy/core/include/numpy/__multiarray_api.h:1642: undefined reference to `__imp_PyExc_AttributeError'
+C:/Users/aab2210/AppData/Local/Continuum/Anaconda3/lib/site-packages/numpy/core/include/numpy/__multiarray_api.h:1647: undefined reference to `__imp_PyCapsule_Type'
+C:/Users/aab2210/AppData/Local/Continuum/Anaconda3/lib/site-packages/numpy/core/include/numpy/__multiarray_api.h:1648: undefined reference to `__imp_PyExc_RuntimeError'
+C:/Users/aab2210/AppData/Local/Continuum/Anaconda3/lib/site-packages/numpy/core/include/numpy/__multiarray_api.h:1663: undefined reference to `__imp_PyExc_RuntimeError'
+C:/Users/aab2210/AppData/Local/Continuum/Anaconda3/lib/site-packages/numpy/core/include/numpy/__multiarray_api.h:1671: undefined reference to `__imp_PyExc_RuntimeError'
+C:/Users/aab2210/AppData/Local/Continuum/Anaconda3/lib/site-packages/numpy/core/include/numpy/__multiarray_api.h:1677: undefined reference to `__imp_PyExc_RuntimeError'
+C:/Users/aab2210/AppData/Local/Continuum/Anaconda3/lib/site-packages/numpy/core/include/numpy/__multiarray_api.h:1687: undefined reference to `__imp_PyExc_RuntimeError'
+C:\Users\aab2210\AppData\Local\Temp\ccOk4aTL.o:C:/Users/aab2210/AppData/Local/Continuum/Anaconda3/lib/site-packages/numpy/core/include/numpy/__multiarray_api.h:1699: more undefined references to `__imp_PyExc_RuntimeError' follow
+C:\Users\aab2210\AppData\Local\Temp\ccOk4aTL.o: In function `NpyCapsule_Check':
+C:/Users/aab2210/AppData/Local/Continuum/Anaconda3/lib/site-packages/numpy/core/include/numpy/npy_3kcompat.h:451: undefined reference to `__imp_PyCapsule_Type'
+C:\Users\aab2210\AppData\Local\Temp\ccOk4aTL.o: In function `unpack_list_of_ssize_t':
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:48: undefined reference to `__imp_PyExc_TypeError'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:58: undefined reference to `__imp_PyExc_IndexError'
+C:\Users\aab2210\AppData\Local\Temp\ccOk4aTL.o: In function `CLazyLinker_init':
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:352: undefined reference to `__imp_PyExc_IndexError'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:370: undefined reference to `__imp_PyExc_IndexError'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:385: undefined reference to `__imp_PyExc_IndexError'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:389: undefined reference to `__imp_PyExc_IndexError'
+C:\Users\aab2210\AppData\Local\Temp\ccOk4aTL.o:C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:393: more undefined references to `__imp_PyExc_IndexError' follow
+C:\Users\aab2210\AppData\Local\Temp\ccOk4aTL.o: In function `CLazyLinker_init':
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:405: undefined reference to `__imp_PyExc_TypeError'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:420: undefined reference to `__imp__Py_NoneStruct'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:426: undefined reference to `__imp_PyExc_IndexError'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:440: undefined reference to `__imp_PyExc_TypeError'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:444: undefined reference to `__imp__Py_NoneStruct'
+C:\Users\aab2210\AppData\Local\Temp\ccOk4aTL.o: In function `c_call':
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:545: undefined reference to `__imp__Py_NoneStruct'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:545: undefined reference to `__imp__Py_NoneStruct'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:545: undefined reference to `__imp__Py_NoneStruct'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:546: undefined reference to `__imp__Py_NoneStruct'
+C:\Users\aab2210\AppData\Local\Temp\ccOk4aTL.o:C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:546: more undefined references to `__imp__Py_NoneStruct' follow
+C:\Users\aab2210\AppData\Local\Temp\ccOk4aTL.o: In function `lazy_rec_eval':
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:618: undefined reference to `__imp_PyExc_IndexError'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:641: undefined reference to `__imp_PyExc_TypeError'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:649: undefined reference to `__imp_PyExc_ValueError'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:657: undefined reference to `__imp_PyExc_IndexError'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:708: undefined reference to `__imp__Py_NoneStruct'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:715: undefined reference to `__imp_PyExc_TypeError'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:721: undefined reference to `__imp_PyExc_TypeError'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:771: undefined reference to `__imp__Py_NoneStruct'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:771: undefined reference to `__imp__Py_NoneStruct'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:772: undefined reference to `__imp__Py_NoneStruct'
+C:\Users\aab2210\AppData\Local\Temp\ccOk4aTL.o: In function `CLazyLinker_call':
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:807: undefined reference to `__imp__Py_NoneStruct'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:807: undefined reference to `__imp__Py_NoneStruct'
+C:\Users\aab2210\AppData\Local\Temp\ccOk4aTL.o:C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:808: more undefined references to `__imp__Py_NoneStruct' follow
+C:\Users\aab2210\AppData\Local\Temp\ccOk4aTL.o: In function `CLazyLinker_call':
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:857: undefined reference to `__imp_PyExc_AssertionError'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:900: undefined reference to `__imp__Py_NoneStruct'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:900: undefined reference to `__imp__Py_NoneStruct'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:901: undefined reference to `__imp__Py_NoneStruct'
+C:\Users\aab2210\AppData\Local\Temp\ccOk4aTL.o: In function `CLazyLinker_set_allow_gc':
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:933: undefined reference to `__imp_PyBool_Type'
+C:/Users/aab2210/AppData/Local/Theano/compiledir_Windows-7-6.1.7601-SP1-Intel64_Family_6_Model_60_Stepping_3_GenuineIntel-3.4.3-64/lazylinker_ext/mod.cpp:936: undefined reference to `__imp__Py_TrueStruct'
+collect2.exe: error: ld returned 1 exit status
+

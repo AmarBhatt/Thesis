@@ -1,3 +1,10 @@
+#import theano
+#theano.config.device = 'gpu'
+#theano.config.floatX = 'float32'
+
+#import os
+#os.environ["THEANO_FLAGS"] = "mode=FAST_RUN,device=gpu,floatX=float32"
+
 from IPython.display import clear_output
 from keras.models import Sequential
 from keras.layers.core import Dense, Dropout, Activation
@@ -19,14 +26,16 @@ def testAlgo(init=0):
     elif init==1:
         state = initGridPlayer()
     elif init==2:
-        state = initGridRand()    
-    #print(dispGrid(state))
+        state = initGridRand()
+    elif init==3:
+        state = initGridRandPlayer()
+    print(dispGrid(state))
     status = 1
     #while game still in progress
     while(status == 1):
         qval = model.predict(state.reshape(1,64), batch_size=1)
         action = (np.argmax(qval)) #take action with highest Q-value
-        print('Move #: %s; Taking action: %s' % (i, action))
+        print('Move #: %s; Taking action: %s' % (i, action),flush=True)
         state = makeMove(state, action)
         #print(dispGrid(state))
         reward = getReward(state)
@@ -46,25 +55,24 @@ def testBed(init,num):
     steps = [];
     wins = 0;
     for i in range(num):
-        print("*-*-*-*-* Test %s *-*-*-*-*"%(i,))
+        print("*-*-*-*-* Test %s *-*-*-*-*"%(i,),flush=True)
         g,r,s = testAlgo(init)
         winloss.append(g)
         reward.append(r)
         steps.append(s)
         wins+=g
-    print("Wins/Game: %s/%s"%(wins,num))
-    plt.figure(1)
+    print("Wins/Game: %s/%s"%(wins,num),flush=True)
+    plt.figure(2)
     plt.subplot(211)
     plt.bar(range(num),winloss,1/1.5,color='blue')
     plt.title("Win/Loss per Test")
     plt.axis([0,num,0,1])
     plt.subplot(212)
-    plt.plot(range(num), steps,'ro')
+    plt.plot(range(num), steps,'r-')
     plt.title("Steps per Test")
     plt.axis([0,num,0,10])
     plt.show()
-    while(True):
-        plt.pause(0.5)
+  
     
         
 def startTraining():
@@ -130,6 +138,8 @@ def startTrainingWithExperienceReplay(stateType,epochs,gamma,epsilon,batchSize,b
             state = initGridPlayer()
         elif stateType==2:
             state = initGridRand()
+        elif stateType == 3:
+            state = initGridRandPlayer()
         #state = initGridPlayer() #using the harder state initialization function
         status = 1
         print("Game %s/%s" % (i,epochs))
@@ -182,12 +192,12 @@ def startTrainingWithExperienceReplay(stateType,epochs,gamma,epsilon,batchSize,b
                 hist = model.fit(X_train, y_train, batch_size=batchSize, nb_epoch=1, verbose=0)
                 #Plot loss function
                 loss.append(hist.history['loss'][0])
-                line.set_xdata(np.append(line.get_xdata(), len(loss)-1))
-                line.set_ydata(np.append(line.get_ydata(), loss[-1]))
-                ax.relim()
-                ax.autoscale_view(True,True,True)
-                plt.draw()
-                plt.pause(0.000000000000000001)
+                #line.set_xdata(np.append(line.get_xdata(), len(loss)-1))
+                #line.set_ydata(np.append(line.get_ydata(), loss[-1]))
+                #ax.relim()
+                #ax.autoscale_view(True,True,True)
+                #plt.draw()
+                #plt.pause(0.000000000000000001)
 
                 state = new_state
             if reward != -1: #if reached terminal state, update game status
@@ -203,11 +213,22 @@ def startTrainingWithExperienceReplay(stateType,epochs,gamma,epsilon,batchSize,b
                     #ax.set_ylim(0,last_max)
                     #last_min = len(loss)-1
             clear_output(wait=True)
-        if epsilon > 0.1: #decrement epsilon over time
+        if epsilon > 0.01: #decrement epsilon over time, used to be 0.1 or 10%
             epsilon -= (1/epochs)
         print("Time Elapsed: %f"%(end-start,))
         print("Avg. Time/Game: %f"%(timeTot/(i+1),))
-        print("Loss: %f"%(loss[-1],))
+        if len(loss) > 0:
+            print("Loss: %f"%(loss[-1],),flush=True)
+        if(i%10000 == 0):
+            model.save('model-'+str(i)+'.h5')
+    
+    model.save('model-'+str(i)+'.h5')
+    line.set_xdata(np.append(line.get_xdata(), range(0,len(loss))))
+    line.set_ydata(np.append(line.get_ydata(), loss))
+    ax.relim()
+    ax.autoscale_view(True,True,True)
+    plt.draw()
+    plt.pause(0.000000000000000001)
     return loss   
 
 
@@ -215,17 +236,18 @@ def startTrainingWithExperienceReplay(stateType,epochs,gamma,epsilon,batchSize,b
 
 #state = en.initGridRand()
 
-model = createModel()
+model = createModelRelu()
 
 #print(model.predict(state.reshape(1,64), batch_size=1))
 #just to show an example output; read outputs left to right: up/down/left/right
 
-epochs = 3000 #number of games
+epochs = 50000 #number of games, 3000
 gamma = 0.975 #discount factor
 epsilon = 1 #policy
-batchSize = 40 #mini-batch ammount
-buffer = 80 #experience replay size
-stateType = 1; #0 - stationary, 1- random player, 2-random environment
+batchSize = 40 #mini-batch ammount - used to be 40
+buffer = 80 #experience replay size - used to be 80
+stateType = 3; #0 - stationary, 1- random player, 2-random environment and random player, 3- random environment
+numTests = 5000;
 #startTraining()
 #testAlgo(init=0)
 #testAlgo(init=1)
@@ -237,11 +259,14 @@ stateType = 1; #0 - stationary, 1- random player, 2-random environment
 
 #history = History()
 
-loss = startTrainingWithExperienceReplay(2,10000,gamma,epsilon,batchSize,buffer)
+loss = startTrainingWithExperienceReplay(stateType,epochs,gamma,epsilon,batchSize,buffer)
 
 #print(loss)
 
-testBed(2,1000)
+testBed(stateType,numTests)
+
+while(True):
+    plt.pause(0.5)
 
 #plt.figure(figsize=(6, 3))
 #plt.plot(range(len(loss)),loss)

@@ -69,6 +69,29 @@ def initGridRand():
     #print(dispGrid(state))
     return state    
 
+#Initialize grid so that goal, pit, and wall are all randomly placed, player is stationary
+def initGridRandPlayer():
+    state = np.zeros((4,4,4))
+    #place player
+    state[0,1] = np.array([0,0,0,1])
+    #place wall
+    state[randPair(0,4)] = np.array([0,0,1,0])
+    #place pit
+    state[randPair(0,4)] = np.array([0,1,0,0])
+    #place goal
+    state[randPair(0,4)] = np.array([1,0,0,0])
+
+    a = findLoc(state, np.array([0,0,0,1]))
+    w = findLoc(state, np.array([0,0,1,0]))
+    g = findLoc(state, np.array([1,0,0,0]))
+    p = findLoc(state, np.array([0,1,0,0]))
+    #If any of the "objects" are superimposed, just call the function again to re-place
+    if (not a or not w or not g or not p):
+        #print('Invalid grid. Rebuilding..')
+        return initGridRandPlayer()
+    #print(dispGrid(state))
+    return state    
+	
 def makeMove(state, action):
     #need to locate player in grid
     #need to determine what object (if any) is in the new grid spot the player is moving to
