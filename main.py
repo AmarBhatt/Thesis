@@ -16,9 +16,12 @@ from keras.callbacks import LambdaCallback
 import random
 from environment import *
 from qnn import *
+import matplotlib
+# Force matplotlib to not use any Xwindows backend.
+#matplotlib.use('Agg')
 
 
-def testAlgo(init=0):
+def testAlgo(init, thefile):
     i = 0
     print("Initial State:")
     if init==0:
@@ -29,49 +32,73 @@ def testAlgo(init=0):
         state = initGridRand()
     elif init==3:
         state = initGridRandPlayer()
-    print(dispGrid(state))
+
+    grid = dispGrid(state);
+    
+    print(grid)
+
+    #thefile.write("\n")
+    #for item in grid:
+     #   for spot in item:
+          #thefile.write("%s  " % spot)
+        #thefile.write("\n")
+      
+    
+    #thefile.write(dispGrid(state))
     status = 1
     #while game still in progress
     while(status == 1):
         qval = model.predict(state.reshape(1,64), batch_size=1)
         action = (np.argmax(qval)) #take action with highest Q-value
         print('Move #: %s; Taking action: %s' % (i, action),flush=True)
+        #thefile.writelines('Move #: %s; Taking action: %s\n' % (i, action))
         state = makeMove(state, action)
         #print(dispGrid(state))
         reward = getReward(state)
         if reward != -1:
             status = 0
             print("Reward: %s" % (reward,))
+            #thefile.writelines("Reward: %s\n" % (reward,))
         i += 1 #If we're taking more than 10 actions, just stop, we probably can't win this game
         if (i > 10):
             print("Game lost; too many moves.")
+            #thefile.writelines("Game lost; too many moves.\n")
             return 0,0,100
             break
     return 1,reward,i
 
-def testBed(init,num):
+def testBed(init,num,epochs):
     winloss = [];
     reward = [];
     steps = [];
     wins = 0;
+    #thefile = open(str(init)+'-test.txt', 'w')
     for i in range(num):
         print("*-*-*-*-* Test %s *-*-*-*-*"%(i,),flush=True)
-        g,r,s = testAlgo(init)
+        #thefile.writelines("*-*-*-*-* Test %s *-*-*-*-*\n"%(i,))
+        g,r,s = testAlgo(init,"thefile")
         winloss.append(g)
         reward.append(r)
         steps.append(s)
         wins+=g
     print("Wins/Game: %s/%s"%(wins,num),flush=True)
-    plt.figure(2)
-    plt.subplot(211)
-    plt.bar(range(num),winloss,1/1.5,color='blue')
-    plt.title("Win/Loss per Test")
-    plt.axis([0,num,0,1])
-    plt.subplot(212)
-    plt.plot(range(num), steps,'r-')
-    plt.title("Steps per Test")
-    plt.axis([0,num,0,10])
-    plt.show()
+    #thefile.writelines("Wins/Game: %s/%s\n"%(wins,num))
+    #thefile.close()
+    #fig = plt.figure()
+    #plt.subplot(211)
+    #plt.bar(range(num),winloss,1/1.5,color='blue')
+    #plt.title("Win/Loss per Test")
+    #plt.axis([0,num,0,1])
+    #plt.subplot(212)
+    #plt.plot(range(num), steps,'r-')
+    #plt.title("Steps per Test")
+    #plt.axis([0,num,0,10])
+    #plt.show()
+    #plt.draw()
+    #plt.pause(0.000000000000000001)   
+    #fig.savefig(str(stateType)+'-test-'+str(epochs)+'.png', bbox_inches='tight')
+
+    #plt.close(fig)
   
     
         
@@ -115,21 +142,21 @@ def startTraining():
         if epsilon > 0.1:
             epsilon -= (1/epochs)   
 
-def startTrainingWithExperienceReplay(stateType,epochs,gamma,epsilon,batchSize,buffer):
+def startTrainingWithExperienceReplay(stateType,epochs,gamma,epsilon,batchSize,buffer,model,testInterval,numTests):
     replay = [] #stores tuples of (S, A, R, S')
     h = 0
     loss = [];
     timeTot = 0
     last_min = 0
     last_max = 2
-    plt.figure(1)
-    plt.ion()
-    ax = plt.gca()
-    ax.set_autoscale_on(True)
-    line, = ax.plot([], [])
-    plt.ylabel('error')
-    plt.xlabel('iterations over time')
-    plt.title('loss over time')
+    #plt.figure(1)
+    #plt.ion()
+    #ax = plt.gca()
+    #ax.set_autoscale_on(True)
+    #line, = ax.plot([], [])
+    #plt.ylabel('error')
+    #plt.xlabel('iterations over time')
+    #plt.title('loss over time')
     
     for i in range(epochs):
         if stateType==0:
@@ -140,7 +167,6 @@ def startTrainingWithExperienceReplay(stateType,epochs,gamma,epsilon,batchSize,b
             state = initGridRand()
         elif stateType == 3:
             state = initGridRandPlayer()
-        #state = initGridPlayer() #using the harder state initialization function
         status = 1
         print("Game %s/%s" % (i,epochs))
         #while game still in progress
@@ -219,18 +245,79 @@ def startTrainingWithExperienceReplay(stateType,epochs,gamma,epsilon,batchSize,b
         print("Avg. Time/Game: %f"%(timeTot/(i+1),))
         if len(loss) > 0:
             print("Loss: %f"%(loss[-1],),flush=True)
-        if(i%10000 == 0):
-            model.save('model-'+str(i)+'.h5')
+        if(i%testInterval == 0):
+            model.save(str(stateType)+'-model-'+str(i)+'.h5')
+            testBed(stateType,numTests,i)
+            fig = plt.figure()
+            plt.ion()
+            ax = plt.gca()
+            ax.set_autoscale_on(True)
+            line, = ax.plot([], [])
+            plt.ylabel('error')
+            plt.xlabel('iterations over time')
+            plt.title('loss over time')
+            line.set_xdata(np.append(line.get_xdata(), range(0,len(loss))))
+            line.set_ydata(np.append(line.get_ydata(), loss))
+            ax.relim()
+            ax.autoscale_view(True,True,True)
+            plt.draw()
+            plt.pause(0.000000000000000001)
+            fig.savefig(str(stateType)+'-loss-'+str(i)+'.png', bbox_inches='tight')
+            plt.close(fig)
     
-    model.save('model-'+str(i)+'.h5')
+    model.save(str(stateType)+'-model-'+str(i)+'.h5')
+    testBed(stateType,numTests,i)
+    fig = plt.figure()
+    plt.ion()
+    ax = plt.gca()
+    ax.set_autoscale_on(True)
+    line, = ax.plot([], [])
+    plt.ylabel('error')
+    plt.xlabel('iterations over time')
+    plt.title('loss over time')
     line.set_xdata(np.append(line.get_xdata(), range(0,len(loss))))
     line.set_ydata(np.append(line.get_ydata(), loss))
     ax.relim()
     ax.autoscale_view(True,True,True)
     plt.draw()
     plt.pause(0.000000000000000001)
+    fig.savefig(str(stateType)+'-loss-'+str(i)+'.png', bbox_inches='tight')
+    plt.close(fig)
     return loss   
 
+
+def main (stateType,epochs,gamma,epsilon,batchSize,buffer, testInterval, numTests):
+
+    for i in range(0,len(stateType)):
+        model = createModelRelu()
+        name = ""
+        if i == 0:
+            name = "All Stationary"
+        elif i == 1:
+            name = "Map Stationary"
+        elif i == 2:
+            name = "None Stationary"
+        elif i == 3:
+            name = "Player Stationary"
+        print("################### BEGIN %s #############################" % (name,))
+        loss = startTrainingWithExperienceReplay(stateType[i],epochs[i],gamma,epsilon,batchSize,buffer,model,testInterval[i],numTests[i])
+        #thefile = open(str(stateType[i])+'-loss.txt', 'w')
+        #thefile.writelines(["%s\n" % item  for item in loss])
+        #thefile.close()
+
+    # Read in the file
+    filedata = None
+    with open('out.txt', 'r') as file :
+      filedata = file.read()
+
+    # Replace the target string
+    filedata = filedata.replace('[2K', '')
+
+    # Write the file out again
+    with open('out.txt', 'w') as file:
+      file.write(filedata)
+    
+                
 
 
 
@@ -248,6 +335,22 @@ batchSize = 40 #mini-batch ammount - used to be 40
 buffer = 80 #experience replay size - used to be 80
 stateType = 3; #0 - stationary, 1- random player, 2-random environment and random player, 3- random environment
 numTests = 5000;
+
+'''
+epochsList = [50000,50000,100000,100000];
+stateTypeList = [0,1,3,2]
+testInterval = [5000, 5000, 10000, 10000];
+numTestsList = [5000, 5000, 10000, 10000];
+'''
+
+epochsList = [5,5,10,10];
+stateTypeList = [0,1,3,2]
+testInterval = [2, 2, 5, 5];
+numTestsList = [2, 2, 5, 5];
+
+main(stateTypeList,epochsList,gamma,epsilon,batchSize,buffer, testInterval, numTestsList)
+
+'''
 #startTraining()
 #testAlgo(init=0)
 #testAlgo(init=1)
@@ -274,6 +377,9 @@ while(True):
 #plt.show()
 
 
+savefig('foo.png', bbox_inches='tight', transparent = True)
+
+
 #print("*-*-*-*-* Test 1 *-*-*-*-*")
 #testAlgo(init=1)
 #print("*-*-*-*-* Test 2 *-*-*-*-*")
@@ -282,3 +388,4 @@ while(True):
 #testAlgo(init=1)
 #print("*-*-*-*-* Test 4 *-*-*-*-*")
 #testAlgo(init=1)
+'''
